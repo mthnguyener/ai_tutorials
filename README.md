@@ -1,8 +1,7 @@
-#  PyProject Starter
-PyProject Starter is a Python project starter kit with docker services and streamlit UI.
+#  AI Tutorials
+AI Tutorials is a public repository with various AI deep dive tutorials.
 
-This starter builds on top of Timothy Helton's Pyproject Generator: 
-https://github.com/TimothyHelton/pyproject_generator
+AI Tutorials was made using PyProject Starter: https://github.com/mthnguyener/pyproject_starter
 
 ## Getting Started With the New Project
  is a fully functioning Python package that may be installed using
@@ -11,7 +10,7 @@ Docker Images are built into the package and a Makefile provides an easy to call
 repetitive commands.
 
 ### PyProject Starter Structure
-- `app`: Applications directory where new apps can be added
+- `applications`: Applications directory where new apps can be added
   - `streamlit`: Streamlit service with sample pages (missing test atm)
     - `subpages`: Sample subpages for a Streamlit app
 - `docker`: Docker directory
@@ -24,6 +23,14 @@ repetitive commands.
   - `configs`: Project configuration files
   - `test`: Project unit tests
 - `scripts`: Folder with setup related scripts
+
+### Docker Naming Convention
+Service: <project_name>_<service>
+    - `ai_tutorials_python`
+Container: <user_name>_<project_name>_<service>
+    - `mthnguyener_ai_tutorials_python`
+Image: <project_name>_<service>
+    - `ai_tutorials_python`
 
 ### Makefile Code Completion
 It's handy to have code completion when calling targets from the Makefile.
@@ -49,12 +56,12 @@ referred to as the "package root directory" throughout the project.
 1. From current project root directory, run:
     - `make create-project`
       - `Enter the new project name: new_project`
-1. Current project directories and files are created in the new project directory
+2. Current project directories and files are created in the new project directory
     - `new_project/`
-1. The new project is created 1-level up from the current project root directory
+3. The new project is created 1-level up from the current project root directory
     - if current project directory is `projects/ai_tutorials` 
       then the new project is created at `projects/new_project`
-1. To add to git:
+4. To add to git:
    - `git init`
    - `git add <new_project_files_and_directories>`
    - `git commit -m "first commit or any comments"`
