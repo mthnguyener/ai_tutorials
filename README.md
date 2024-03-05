@@ -1,16 +1,21 @@
-#  PyProject Starter
-PyProject Starter is a Python project starter kit with docker services and streamlit UI.
+#  Ai Tutorials
+AI Tutorials is a repository for various AI Tutorials.
 
-This starter builds on top of Timothy Helton's Pyproject Generator: 
-https://github.com/TimothyHelton/pyproject_generator
+This starter builds on top of Pyproject Starter: 
+https://github.com/mthnguyener/pyproject_starter.git
 
-## Getting Started With the New Project
- is a fully functioning Python package that may be installed using
+## Getting Started With AI Tutorials
+
+To run the tutorials, follow the steps to initialize the project and launch Jupyter Notebooks.
+This is a fully functioning Python package that may be installed using
 `pip`.
 Docker Images are built into the package and a Makefile provides an easy to call
 repetitive commands.
 
-### PyProject Starter Structure
+### AI Tutorials Structure
+- `ai_tutorials`: Project main script directory - additional apps are added here
+  - `configs`: Project configuration files
+  - `test`: Project unit tests
 - `app`: Applications directory where new apps can be added
   - `streamlit`: Streamlit service with sample pages (missing test atm)
     - `subpages`: Sample subpages for a Streamlit app
@@ -20,9 +25,10 @@ repetitive commands.
   - `docker-compose.yaml`: Yaml file used by Docker Compose to define the services, 
   networks, and volumes for a multi-container application
 - `docs`: Folder used by sphinx for auto-documentation
-- `ai_tutorials`: Project main script directory - additional apps are added here
-  - `configs`: Project configuration files
-  - `test`: Project unit tests
+- `notebooks`: Folder where the tutorials are
+  - `transformers`: Transformers Tutorials
+    - `vits`: Vision Transformers Tutorials
+      - `vit_self-attention.ipynb`: Tutorials on attention mechanism in ViTs 
 - `scripts`: Folder with setup related scripts
 
 ### Makefile Code Completion
