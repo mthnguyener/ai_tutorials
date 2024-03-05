@@ -40,10 +40,6 @@ cpp-build:
 		&& cmake --build . \
 		&& cp lib/*.so* ../lib
 
-create-project:
-	@read -p "Enter the new project name: " NEW_PROJECT; \
-	./scripts/update_project_name.sh $(PROJECT) $$NEW_PROJECT
-
 deploy: docker-up
 	@$(DOCKER_CMD) container exec $(CONTAINER_PREFIX)_python pip3 wheel --wheel-dir=wheels .[all]
 	@git tag -a v$(VERSION) -m "Version $(VERSION)"
@@ -190,6 +186,10 @@ mlflow-stop-server: docker-up
 mongo-create-user:
 	@sleep 2
 	@$(DOCKER_CMD) container exec $(CONTAINER_PREFIX)_mongo /docker-entrypoint-initdb.d/create_user.sh
+
+new-project:
+	@read -p "Enter the new project name: " NEW_PROJECT; \
+	./scripts/update_project_name.sh $(PROJECT) $$NEW_PROJECT
 
 notebook: docker-up notebook-server
 	@printf "%s\n" \

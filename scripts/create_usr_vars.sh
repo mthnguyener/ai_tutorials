@@ -19,9 +19,10 @@ do
 done
 
 # Create usr_vars configuration file
-INITIAL_PORT=$(( (UID - 500) + 10000 ))
+INITIAL_PORT=$(( (UID - 500) * 50 + 10000 ))
 printf "%s\n" \
-    "COMPOSE_PROJECT_NAME=${USER}" \
+    "USER_NAME=${USER}" \
+    "PROJECT_NAME=ai_tutorials" \
     "" \
     "# Data Directory" \
     "DATA_DIR=/mnt/data" \
@@ -42,4 +43,3 @@ printf "%s\n" \
     "" \
     > "usr_vars"
 echo "Successfully created: usr_vars"
-
