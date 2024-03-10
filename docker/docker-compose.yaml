@@ -5,7 +5,7 @@ secrets:
   package:
     file: secrets/package.txt
 services:
-  nginx:
+  ai_tutorials_nginx:
     container_name: ${COMPOSE_PROJECT_NAME:-default}_ai_tutorials_nginx
     env_file: .env
     environment:
@@ -18,7 +18,7 @@ services:
     restart: always
     volumes:
     - ../docs/_build/html:/usr/share/nginx/html:ro
-  python:
+  ai_tutorials_python:
     build:
       context: ..
       dockerfile: docker/pytorch.Dockerfile
@@ -65,7 +65,7 @@ services:
     - ..:/usr/src/ai_tutorials
     - ${DATA_DIR}:/usr/src/ai_tutorials/data
     - ai_tutorials-secret:/usr/src/ai_tutorials/docker/secrets
-  streamlit:
+  ai_tutorials_streamlit:
     build:
       context: ..
       dockerfile: docker/streamlit.Dockerfile
