@@ -1,5 +1,6 @@
 #  Ai Tutorials
-AI Tutorials is a repository for various AI Tutorials.
+AI Tutorials is a repository for various AI Tutorials. Tutorials are located in 
+`noteboooks/` in their respective areas.
 
 This starter builds on top of Pyproject Starter: 
 https://github.com/mthnguyener/pyproject_starter.git
@@ -13,10 +14,10 @@ Docker Images are built into the package and a Makefile provides an easy to call
 repetitive commands.
 
 ### AI Tutorials Structure
-- `ai_tutorials`: Project main script directory - additional apps are added here
+- `ai_tutorials`: Project main script directory
   - `configs`: Project configuration files
   - `test`: Project unit tests
-- `app`: Applications directory where new apps can be added
+- `applications`: Applications directory where new apps can be added
   - `streamlit`: Streamlit service with sample pages (missing test atm)
     - `subpages`: Sample subpages for a Streamlit app
 - `docker`: Docker directory
@@ -28,7 +29,7 @@ repetitive commands.
 - `notebooks`: Folder where the tutorials are
   - `transformers`: Transformers Tutorials
     - `vits`: Vision Transformers Tutorials
-      - `vit_self-attention.ipynb`: Tutorials on attention mechanism in ViTs 
+      - `self-attention.ipynb`: Tutorials on attention mechanism in ViTs 
 - `scripts`: Folder with setup related scripts
 
 ### Makefile Code Completion
@@ -76,15 +77,15 @@ the project.
 make getting-started
 ```
 
-### Jupyter Notebooks
+### Launching the Tutorials (Jupyter Notebooks)
 While Jupyter notebooks are not ideal for source code, they can be powerful
 when applied to path finding and creating training material.
-The ai_tutorials project is capable of creating a Jupyter 
-server in the Python container. Since the package root directory is mounted to 
-the Docker container any changes made on the client will persist on the host and
-vice versa. For consistency when creating notebooks please store them in the 
-`notebooks` directory. Call the following commands from the package root 
-directory to start and stop the Jupyter server.
+The tutorials are launched via Jupyter 
+server in the main Python container (ai_tutorials_python). Since the package 
+root directory is mounted to the Docker container any changes made on the client
+will persist on the host and vice versa. For consistency when creating notebooks
+please store them in the `notebooks` directory. Call the following commands 
+from the package root directory to start and stop the Jupyter server.
 
 #### Create a Notebook Server
 ```bash

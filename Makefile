@@ -15,7 +15,7 @@ else
 	BROWSER=open
 endif
 
-CONTAINER_PREFIX:=$(COMPOSE_PROJECT_NAME)_$(PROJECT)
+CONTAINER_PREFIX:=$(USER_NAME)_$(PROJECT)
 DOCKER_CMD=docker
 DOCKER_COMPOSE_CMD=docker compose
 DOCKER_IMAGE=$(shell head -n 1 docker/python.Dockerfile | cut -d ' ' -f 2)
