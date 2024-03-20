@@ -27,6 +27,8 @@ repetitive commands.
   networks, and volumes for a multi-container application
 - `docs`: Folder used by sphinx for auto-documentation
 - `notebooks`: Folder where the tutorials are
+  - `fundatmentals`: Tutorials on AI fundamentals
+    - `pytorch-tensors.ipynb`: Tutorials on Tensors
   - `transformers`: Transformers Tutorials
     - `vits`: Vision Transformers Tutorials
       - `self-attention.ipynb`: Tutorials on attention mechanism in ViTs 
