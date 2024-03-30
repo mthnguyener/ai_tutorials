@@ -32,7 +32,7 @@ rm -rf venv
 rm -rf wheels
 rm usr_vars
 mv $OLD_PROJECT $NEW_PROJECT
-find . -type f -exec sed -i "s/$OLD_PROJECT/$NEW_PROJECT/g" {} +
+find . -type f ! -name 'README.md' -exec sed -i "s/$OLD_PROJECT/$NEW_PROJECT/g" {} +
 
 # Removing git directory
 rm -rf .git

@@ -19,8 +19,9 @@ dist/
 *.so*
 
 # Docker files
-docker/.env
-docker/secrets/
+*.env
+*secrets/
+*/docker/
 
 # Environments
 venv/*
