@@ -1,5 +1,5 @@
 #!/bin/bash
-# update_project_name.sh
+# create_new_project.sh
 
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <OLD_PROJECT> <NEW_PROJECT>"

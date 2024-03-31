@@ -189,7 +189,7 @@ mongo-create-user:
 
 new-project:
 	@read -p "Enter the new project name: " NEW_PROJECT; \
-	./scripts/update_project_name.sh $(PROJECT) $$NEW_PROJECT
+	./scripts/create_new_project.sh $(PROJECT) $$NEW_PROJECT
 
 notebook: docker-up notebook-server
 	@printf "%s\n" \
