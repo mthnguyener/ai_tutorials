@@ -28,7 +28,8 @@ repetitive commands.
 - `docs`: Folder used by sphinx for auto-documentation
 - `notebooks`: Folder where the tutorials are
   - `fundatmentals`: Tutorials on AI fundamentals
-    - `pytorch-tensors.ipynb`: Tutorials on Tensors
+    - `pytorch_tensors.ipynb`: Tutorials on Tensors
+  - `self_supervised_learning`: Tutorials on Self Supervised Learning
   - `transformers`: Transformers Tutorials
     - `vits`: Vision Transformers Tutorials
       - `self-attention.ipynb`: Tutorials on attention mechanism in ViTs 
