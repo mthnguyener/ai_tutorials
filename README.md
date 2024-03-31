@@ -15,7 +15,7 @@ https://github.com/mthnguyener/pyproject_starter.git
 - `ai_tutorials`: Project main script directory
   - `configs`: Project configuration files
   - `test`: Project unit tests
-  - `tutorials`: Project tutorials
+  - `tutorials`: Project tutorial-related Python scripts
 - `applications`: Applications directory where new apps can be added
   - `streamlit`: Streamlit service with sample pages (missing test atm)
     - `subpages`: Sample subpages for a Streamlit app
@@ -25,7 +25,7 @@ https://github.com/mthnguyener/pyproject_starter.git
   - `docker-compose.yaml`: Yaml file used by Docker Compose to define the services, 
   networks, and volumes for a multi-container application
 - `docs`: Folder used by sphinx for auto-documentation
-- `notebooks`: Folder where the tutorials are
+- `notebooks`: Folder with the tutorials. Launch Jupyter Notebooks to run the tutorials.
   - `fundatmentals`: Tutorials on AI fundamentals
     - `pytorch_tensors.ipynb`: Tutorials on Tensors
   - `self_supervised_learning`: Tutorials on Self Supervised Learning
@@ -34,23 +34,6 @@ https://github.com/mthnguyener/pyproject_starter.git
     - `vits`: Vision Transformers Tutorials
       - `self-attention.ipynb`: Tutorials on attention mechanism in ViTs 
 - `scripts`: Folder with setup related scripts
-
-### Setting Up New Project
-1. From current project root directory, run:
-    - `make create-project`
-      - `Enter the new project name: new_project`
-1. Current project directories and files are created in the new project directory
-    - `new_project/`
-1. The new project is created 1-level up from the current project root directory
-    - if current project directory is `projects/ai_tutorials` 
-      then the new project is created at `projects/new_project`
-1. To add to git:
-   - `git init`
-   - `git add <new_project_files_and_directories>`
-   - `git commit -m "first commit or any comments"`
-   - `git branch -M main`
-   - `git remote add origin https://github.com/<user_or_organization>/<project>.git`
-   - `git push -u origin main`
 
 ## Acknowledgements
 If you find this project helpful in your work and decide to mention or reference 

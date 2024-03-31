@@ -11,15 +11,6 @@ This is a fully functioning Python package that may be installed using
 Docker Images are built into the package and a Makefile provides an easy to call
 repetitive commands.
 
-## Makefile Code Completion
-It's handy to have code completion when calling targets from the Makefile.
-To enable this feature add the following to your user profile file.
-- On Ubuntu this would be your `~/.profile` file.
-- On a Mac this would be you `~/.bash_profile` file.
-```bash
-complete -W "`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' Makefile | sed 's/[^a-zA-Z0-9_.-]*$//'`" make
-```
-
 ## Clone the Repository
 First, make a local copy of the project.
 After setting up SSH keys on GitHub call the following command to clone the
@@ -82,18 +73,6 @@ To only run the YAPF style linter call this command from the package root
 directory.
 ```bash
 make format-style
-```
-
-## Dependencies
-Since the ai_tutorials utilizes NVIDIA optimized Docker 
-images most of the Python dependencies could be installed using PIP or Conda.
-The `requirements.txt` file contains a reference to the specific
-base image used during development and a list of dependencies.
-
-There is a make target to update the requirements file.
-
-```bash
-make package-dependencies
 ```
 
 <br>
