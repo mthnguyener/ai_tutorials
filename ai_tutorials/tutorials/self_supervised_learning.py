@@ -48,16 +48,13 @@ class Cutout:
 
         return img * mask
 
-
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.RandomResizedCrop(32),
-    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomHorizontalFlip(),
+    transforms.ColorJitter(brightness=0.4, contrast=0.4,
+                           saturation=0.4, hue=0.2),
     transforms.RandomAffine(degrees=10, translate=(0.1, 0.1)),
-    transforms.ColorJitter(brightness=0.4,
-                           contrast=0.4,
-                           saturation=0.4,
-                           hue=0.2),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
     Cutout(n_holes=1, length=16)  # Introduce holes in images
 ])
@@ -69,22 +66,14 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 batch_size = 128
 num_workers = 16
 
-train_dataset = datasets.CIFAR10(root='./data',
-                                 train=True,
-                                 download=True,
+train_dataset = datasets.CIFAR10(root='./data', train=True, download=True,
                                  transform=transform)
-train_loader = DataLoader(train_dataset,
-                          batch_size=batch_size,
-                          shuffle=True,
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
                           num_workers=num_workers)
 
-test_dataset = datasets.CIFAR10(root='./data',
-                                train=False,
-                                download=True,
+test_dataset = datasets.CIFAR10(root='./data', train=False, download=True,
                                 transform=transform)
-test_loader = DataLoader(test_dataset,
-                         batch_size=batch_size,
-                         shuffle=False,
+test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False,
                          num_workers=num_workers)
 
 
@@ -98,16 +87,18 @@ class Encoder(nn.Module):
     def __init__(self):
         super(Encoder, self).__init__()
         self.encoder = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=3, padding=1), nn.ReLU(inplace=True),
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
-            nn.Conv2d(64, 128, kernel_size=3,
-                      padding=1), nn.ReLU(inplace=True),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
-            nn.Conv2d(128, 256, kernel_size=3,
-                      padding=1), nn.ReLU(inplace=True),
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2),
             nn.Conv2d(256, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True), nn.MaxPool2d(kernel_size=2))
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2))
 
     def forward(self, x):
         return self.encoder(x)
@@ -191,10 +182,16 @@ def train_simclr(learning_rate: float = 0.0005, num_epochs: int = 100):
     # Update projection head input dimension
     projection_head = ProjectionHead(2048, 256, 128).to(device)
     model = SimCLR(encoder, projection_head).to(device)
+    model.train()  # Set model to training mode
 
     # Define optimizer and loss function
     criterion = ContrastiveLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    # Learning rate scheduler
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,
+                                                           T_max=num_epochs,
+                                                           eta_min=0)
 
     for epoch in range(num_epochs):
         total_loss = 0
@@ -210,9 +207,12 @@ def train_simclr(learning_rate: float = 0.0005, num_epochs: int = 100):
 
             total_loss += loss.item()
 
+        # Update learning rate
+        scheduler.step()
+
         # Print information every 5 epochs or at the last epoch
-        if (epoch + 1) % (num_epochs / (num_epochs / 20)) == 0 or \
-                epoch == num_epochs - 1:
+        if (epoch + 1) % (num_epochs/20) == 0 \
+                or epoch == num_epochs - 1:
             print(f"Epoch [{epoch + 1}/{num_epochs}], "
                   f"Loss: {total_loss / len(train_loader):.4f}")
 
@@ -269,6 +269,7 @@ def train_classifier(learning_rate: float = 0.0001,
     # Initialize the classifier (assuming reduced feature dim is 192 * 4 * 4)
     classifier = LinearClassifier(input_dim=192 * 4 * 4,
                                   num_classes=10).to(device)
+    classifier.train()
 
     # Define optimizer and loss function
     criterion = nn.CrossEntropyLoss()
@@ -278,7 +279,6 @@ def train_classifier(learning_rate: float = 0.0001,
 
     # Train the linear classifier
     for epoch in range(num_epochs):
-        classifier.train()
         for features, labels in train_loader:
             # Reshape features if necessary (same as in extract_features)
             features = features.view(features.size(0), -1).to(device)
@@ -292,8 +292,8 @@ def train_classifier(learning_rate: float = 0.0001,
             optimizer.step()
 
         # Print information every 5 epochs or at the last epoch
-        if (epoch + 1) % (num_epochs / (num_epochs / 20)) == 0 or \
-                epoch == num_epochs - 1:
+        if (epoch + 1) % (num_epochs/20) == 0 \
+                or epoch == num_epochs - 1:
             print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
 
     end = time.time()
@@ -324,6 +324,6 @@ def eval_classifier(classifier=None):
 
 
 if __name__ == '__main__':
-    simclr = train_simclr(num_epochs=10)
-    image_classifier = train_classifier(model=simclr, num_epochs=5)
+    simclr = train_simclr(num_epochs=50)
+    image_classifier = train_classifier(model=simclr, num_epochs=10)
     eval_classifier(classifier=image_classifier)
